@@ -2,7 +2,6 @@ package npc.martin.todoapp.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -10,15 +9,15 @@ import java.time.format.DateTimeFormatter;
  */
 
 public class TodoObject {
-    private String todoId;
-    private String todoDefinition;
-    private String todoDetails;
+    private String todoId; //\\
+    private String todoDefinition;//
+    private String todoDetails;//
     private LocalDate dateCreated;
-    private CharSequence timeCreated;
-    private LocalDate dateToExecute;
+    private LocalTime timeCreated; //\\
+    private LocalDate dateToExecute;//
     private LocalDate dateExecuted;
 
-    public String getToDo() {
+    public String getTodoId() {
         return todoId;
     }
 
@@ -50,11 +49,11 @@ public class TodoObject {
         this.dateCreated = dateCreated;
     }
 
-    public CharSequence getTimeCreated() {
+    public LocalTime getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(CharSequence timeCreated) {
+    public void setTimeCreated(LocalTime timeCreated) {
         this.timeCreated = timeCreated;
     }
 
@@ -74,23 +73,17 @@ public class TodoObject {
         this.dateExecuted = dateExecuted;
     }
     
-    public TodoObject(String todoDefinition, String todoDetails, LocalDate dateCreated, CharSequence timeCreated, 
-            LocalDate dateToExecute, LocalDate dateExecuted) {
+    public TodoObject(String todoId, String todoDefinition, String todoDetails, LocalDate dateCreated, LocalTime timeCreated, 
+            LocalDate dateToExecute) {
+        this.todoId = todoId;
         this.todoDefinition = todoDefinition;
         this.todoDetails = todoDetails;
         this.dateCreated = dateCreated;
         this.timeCreated = timeCreated;
         this.dateToExecute = dateToExecute;
-        this.dateExecuted = dateExecuted;
     }
     
     public TodoObject() {
         //parameterless constructor
-    }
-    
-    public static void main(String[] args) {
-        CharSequence exampleDate = "2021 Dec 21";
-        LocalDate date = LocalDate.parse(exampleDate, DateTimeFormatter.ofPattern("uuuu MMM dd")); //yyyy-MM-dd
-        System.out.println("Date: " + date);
     }
 }

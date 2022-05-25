@@ -1,5 +1,6 @@
 package npc.martin.todoapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,5 +9,21 @@ import java.util.List;
  * <h3>TODO OBJECTS</h3>
  */
 public class TodoList {
-    List<TodoObject> todoList;
+    List<TodoObject> todoList = new ArrayList<>();
+    
+    public void addTodo(TodoObject todo) {
+        this.todoList.add(todo);
+    }
+    
+    public void removeTodo() {
+        
+    }
+    
+    public Integer getNumberOfTodos() {
+        return this.todoList.size();
+    }
+    
+    public TodoObject getTodo(Integer index) {
+        return todoList.get(index);
+    }
 }
