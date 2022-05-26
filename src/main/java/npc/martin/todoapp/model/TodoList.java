@@ -6,10 +6,13 @@ import java.util.List;
 /**
  *
  * @author bikathi_martin
- * <h3>TODO OBJECTS</h3>
  */
 public class TodoList {
-    List<TodoObject> todoList = new ArrayList<>();
+    public List<TodoObject> todoList = new ArrayList<>();
+    
+    public List<TodoObject> getTodoList() {
+        return todoList;
+    }
     
     public void addTodo(TodoObject todo) {
         this.todoList.add(todo);
