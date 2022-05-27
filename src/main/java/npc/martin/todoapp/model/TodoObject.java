@@ -9,13 +9,13 @@ import java.time.LocalTime;
  */
 
 public class TodoObject {
-    private String todoId; //\\
-    private String todoDefinition;//
-    private String todoDetails;//
+    private String todoId;
+    private String todoDefinition;
+    private String todoDetails;
     private LocalDate dateCreated;
-    private LocalTime timeCreated; //\\
-    private LocalDate dateToExecute;//
-    private LocalDate dateExecuted;
+    private LocalTime timeCreated;
+    private LocalDate dateToExecute;
+    private LocalDate dateExecuted = LocalDate.now();
 
     public String getTodoId() {
         return todoId;
