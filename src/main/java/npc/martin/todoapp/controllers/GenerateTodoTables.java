@@ -5,6 +5,7 @@ import com.github.freva.asciitable.Column;
 import npc.martin.todoapp.model.TodoObject;
 import java.util.Arrays;
 import java.util.List;
+import npc.martin.todoapp.model.TodoList;
 
 /**
  *
@@ -39,16 +40,30 @@ public class GenerateTodoTables extends CreateTodo {
         )));
     }
     
-    public void generateWithID(Integer indexToPrint) {
-        System.out.println("Populating view table... ");
-        TodoObject[] todoItems = {listActions.todoList.get(indexToPrint)};
-        singleItemList = Arrays.asList(todoItems);
+    public void generateWithID(String targetTodoId) {
+        listActions = transactions.readSavedJSON();
+        Integer indexToPrint = new FindAndEditTodo().findTodo(targetTodoId, listActions);
         
-        this.tableGenerator(singleItemList);
+        if(indexToPrint != null) {
+            System.out.println("Populating view table... ");
+            singleItemList = Arrays.asList(listActions.todoList.get(indexToPrint));
+        
+            this.tableGenerator(singleItemList);
+        } else {
+            System.out.println("Sorry, no match for that ID :(");
+        }  
     }
     
     public void generateWithoutID() {
+        listActions = transactions.readSavedJSON();
         System.out.println("Generating view tables...");
         this.tableGenerator(listActions.getTodoList());
+    }
+    
+    public void generateWithIndex(Integer index, TodoList listActions) {
+        singleItemList = Arrays.asList(listActions.todoList.get(index));
+        System.out.println("Generating view table...");
+        
+        this.tableGenerator(singleItemList);
     }
 }
