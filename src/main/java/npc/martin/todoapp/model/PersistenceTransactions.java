@@ -1,6 +1,7 @@
 package npc.martin.todoapp.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 /**
@@ -9,9 +10,11 @@ import java.io.IOException;
  */
 public class PersistenceTransactions {
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private String userHome = System.getProperty("user.home");
     
     public void saveAsJSON(TodoList todoListObject) {
         try {
+            objectMapper.registerModule(new JavaTimeModule());
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("todo-simple.json"), todoListObject);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -20,6 +23,7 @@ public class PersistenceTransactions {
     
     public TodoList readSavedJSON() {
         TodoList readObject = null;
+        objectMapper.registerModule(new JavaTimeModule());
         
         try {
             readObject = objectMapper.readValue(new File("todo-simple.json"), TodoList.class);
@@ -29,12 +33,4 @@ public class PersistenceTransactions {
         
         return readObject;
     }
-    
-    /**public static void main(String[] args) {
-        TodoList testWriteObject = new TodoList();
-        new PersistenceTransactions().saveAsJSON(testWriteObject);
-        
-        TodoList testReadObject = new PersistenceTransactions().readSavedJSON();
-        System.out.println("Read object: " + testReadObject.toString());
-    }*/
 }
