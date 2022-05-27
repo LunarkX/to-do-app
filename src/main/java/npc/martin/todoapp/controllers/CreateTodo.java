@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import npc.martin.todoapp.model.TodoObject;
 import npc.martin.todoapp.model.TodoList;
+import npc.martin.todoapp.model.PersistenceTransactions;
 import java.util.Scanner;
 
 /**
@@ -23,8 +24,11 @@ public class CreateTodo extends GenerateMetadata {
     
     Scanner s1 = new Scanner(System.in);
     TodoList listActions = new TodoList();
+    PersistenceTransactions transactions = new PersistenceTransactions();
     
     public void createATodo() {
+        listActions = transactions.readSavedJSON();
+        
         this.todoId = this.generateUniqueId();
         this.dateCreated = this.generateDateCreated();
         this.timeCreated = this.generateTimeCreated();
@@ -43,19 +47,25 @@ public class CreateTodo extends GenerateMetadata {
         dateToExecute = LocalDate.parse(dateAsCharSequence, DateTimeFormatter.ofPattern("dd MMM yyyy"));
         
         TodoObject todo = new TodoObject(todoId, todoDefinition, todoDetails, dateCreated, timeCreated, dateToExecute);
-        Integer previousListSize = listActions.getNumberOfTodos();
+        Integer previousListSize = listActions.todoList.size();
         listActions.addTodo(todo);
-        Integer postAddListSize = listActions.getNumberOfTodos();
+        Integer postAddListSize = listActions.todoList.size();
         
         if(postAddListSize - previousListSize == 1) {
             System.out.println("Successfully added new todo :) ");
+            System.out.println("Saving todo... ");
+            transactions.saveAsJSON(listActions);
         } else {
             System.out.println("Error adding new todo :(");
         }
-        System.out.println("todo list size: " + listActions.getNumberOfTodos());
+        
+        System.out.println("todo list size: " + listActions.todoList.size());
+        
     }
     
     public void createATodo(String def, String details, CharSequence toExecute) {
+        listActions = transactions.readSavedJSON();
+        
         this.todoId = this.generateUniqueId();
         this.todoDefinition = def;
         this.todoDetails = details;
@@ -64,15 +74,21 @@ public class CreateTodo extends GenerateMetadata {
         this.dateToExecute = LocalDate.parse(toExecute, DateTimeFormatter.ofPattern("dd MMM yyyy"));
         
         TodoObject todo = new TodoObject(todoId, todoDefinition, todoDetails, dateCreated, timeCreated, dateToExecute);
-        Integer previousListSize = listActions.getNumberOfTodos();
+        Integer previousListSize = listActions.todoList.size();
         listActions.addTodo(todo);
-        Integer postAddListSize = listActions.getNumberOfTodos();
+        Integer postAddListSize = listActions.todoList.size();
         
         if(postAddListSize - previousListSize == 1) {
             System.out.println("Successfully added new todo :) ");
+            System.out.println("Saving todo... ");
+            transactions.saveAsJSON(listActions);
         } else {
             System.out.println("Error adding new todo :(");
         }
-        System.out.println("todo list size: " + listActions.getNumberOfTodos());
+        System.out.println("todo list size: " + listActions.todoList.size());
+    }
+    
+    public static void main(String[] args) {
+        new CreateTodo().createATodo("foo6", "bar6", "21 Aug 2024");
     }
 }
