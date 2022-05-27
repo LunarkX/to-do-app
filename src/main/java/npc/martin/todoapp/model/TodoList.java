@@ -18,15 +18,8 @@ public class TodoList {
         this.todoList.add(todo);
     }
     
-    public void removeTodo() {
-        
-    }
-    
-    public Integer getNumberOfTodos() {
-        return this.todoList.size();
-    }
-    
     public TodoObject getTodo(Integer index) {
         return todoList.get(index);
     }
 }
+
