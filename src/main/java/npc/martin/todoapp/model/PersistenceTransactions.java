@@ -1,5 +1,7 @@
 package npc.martin.todoapp.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
@@ -26,6 +28,7 @@ public class PersistenceTransactions {
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("todo-simple.json"), todoListObject);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -40,6 +43,7 @@ public class PersistenceTransactions {
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             readObject = objectMapper.readValue(new File("todo-simple.json"), TodoList.class);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -58,6 +62,7 @@ public class PersistenceTransactions {
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("todo-markded-done.json"), doneList);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -72,6 +77,7 @@ public class PersistenceTransactions {
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             doneList = Arrays.asList(objectMapper.readValue(new File("todo-marked-done.json"), TodoObject[].class));
         } catch (IOException ex) {
             System.out.println(ex);
