@@ -20,14 +20,14 @@ public class FindAndEditTodo extends CreateTodo {
         
         for(TodoObject todoItem : listActions.getTodoList()) {
             String todoItemId = todoItem.getTodoId();
-            if(targetTodoId.equals(todoItemId)) {
+            if(todoItemId.equals(targetTodoId)) {
                positionInList = listActions.getTodoList().indexOf(todoItem);
                System.out.println("Match found! Populating results table... ");
                new GenerateTodoTables().generateWithIndex(positionInList, listActions);
                break;
-            } else {
+            } else if(!(todoItemId.equals(targetTodoId)) && 
+                    (listActions.getTodoList().indexOf(todoItem) == listActions.getTodoList().size() - 1)) {
                 System.out.println("Sorry, no match for that ID :(");
-                break;
             }
         }
     }
@@ -37,7 +37,7 @@ public class FindAndEditTodo extends CreateTodo {
         
         for(TodoObject todoItem : list.getTodoList()) {
             String todoItemId = todoItem.getTodoId();
-            if(targetTodoId.equals(todoItemId)) {
+            if(todoItemId.equals(targetTodoId)) {
                 positionInList = list.getTodoList().indexOf(todoItem);
                 break;
             }
@@ -72,9 +72,5 @@ public class FindAndEditTodo extends CreateTodo {
         } else {
             System.out.println("Sorry. No match found for that ID.");
         }
-    }
-    
-    public static void main(String[] args) {
-        new FindAndEditTodo().editTodo("54f8f52b");
     }
 }
