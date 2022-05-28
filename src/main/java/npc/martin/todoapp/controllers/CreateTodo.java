@@ -87,8 +87,4 @@ public class CreateTodo extends GenerateMetadata {
         }
         System.out.println("todo list size: " + listActions.todoList.size());
     }
-    
-    public static void main(String[] args) {
-        new CreateTodo().createATodo("foo6", "bar6", "21 Aug 2024");
-    }
 }
