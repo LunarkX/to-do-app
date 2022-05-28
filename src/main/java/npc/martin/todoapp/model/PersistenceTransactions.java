@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -18,18 +19,20 @@ public class PersistenceTransactions {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String userHome = System.getProperty("user.home");
     
+    public List<TodoObject> temporaryList = new ArrayList<>();
+    
     public void saveAsJSON(TodoList todoListObject) {
-        /*//make the storage directory in a hidden folder in /home/user
-        File file = new File(userHome + File.separator + ".todoapp");
+        //make the storage directory in a hidden folder in /home/user
+        File file = new File(userHome + File.separator + ".todoappdata");
         file.mkdir();
         
         //get path to the storage 
-        Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todo-saved.json");*/
+        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("todo-simple.json"), todoListObject);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path.toString()), todoListObject);
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -39,12 +42,12 @@ public class PersistenceTransactions {
         TodoList readObject = null;
         
         //get path to the source file
-        /*Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todo-saved.json");*/
+        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-            readObject = objectMapper.readValue(new File("todo-simple.json"), TodoList.class);
+            readObject = objectMapper.readValue(new File(path.toString()), TodoList.class);
         } catch (IOException ex) {
             System.out.println(ex);
         }
@@ -53,36 +56,37 @@ public class PersistenceTransactions {
     }
     
     public void saveMarkedDone(List<TodoObject> doneList) {
-        /*//make the storage directory in a hidden folder in /home/user
-        File file = new File(userHome + File.separator + ".todoapp");
+        //make the storage directory in a hidden folder in /home/user
+        File file = new File(userHome + File.separator + ".todoappdata");
         file.mkdir();
         
         //get path to the storage 
-        Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todo-marked-done.json");*/
+        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("todo-markded-done.json"), doneList);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path.toString()), doneList);
         } catch (IOException ex) {
             System.out.println(ex);
         }
     }
     
     public List<TodoObject> readMarkedDone() {
-        List<TodoObject> doneList = null;
+        List<TodoObject> doneTodosList = null;
         
         //get path to the source file
-        /*Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todo-marked-done.json");*/
+        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
         
         try {
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-            doneList = Arrays.asList(objectMapper.readValue(new File("todo-marked-done.json"), TodoObject[].class));
+            temporaryList = Arrays.asList(objectMapper.readValue(new File(path.toString()), TodoObject[].class));
+            doneTodosList = new ArrayList<>(temporaryList);
         } catch (IOException ex) {
             System.out.println(ex);
         }
         
-        return doneList;
+        return doneTodosList;
     }
 }
