@@ -5,7 +5,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine;
 
-@Command(name = "td", description = "Start the ToDo command line utility.", version = "Todo-1.0-BETA")
+@Command(name = "td", description = "Start the Todo command line utility.", version = "Todo-1.0-BETA")
 public class Todo implements Runnable {
     @Override
     public void run() {

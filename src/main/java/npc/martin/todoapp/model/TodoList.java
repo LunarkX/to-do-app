@@ -17,9 +17,5 @@ public class TodoList {
     public void addTodo(TodoObject todo) {
         this.todoList.add(todo);
     }
-    
-    public TodoObject getTodo(Integer index) {
-        return todoList.get(index);
-    }
 }
 
