@@ -1,9 +1,11 @@
 package npc.martin.todoapp;
 
+import java.io.File;
 import npc.martin.todoapp.controllers.CreateTodo;
 import npc.martin.todoapp.controllers.FindAndEditTodo;
 import npc.martin.todoapp.controllers.GenerateTodoTables;
 import npc.martin.todoapp.controllers.MarkAsDone;
+import npc.martin.todoapp.model.InitSample;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine;
@@ -11,7 +13,7 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 
-@Command(name = "td", description = "Start the Todo command line utility.", mixinStandardHelpOptions = true, 
+@Command(name = "todo", description = "Start the Todo command line utility.", mixinStandardHelpOptions = true, 
         version = "Todo-1.0-BETA")
 public class Todo implements Runnable {
     @Spec CommandSpec spec;
@@ -23,7 +25,7 @@ public class Todo implements Runnable {
     
     @Command(name = "new", description = "Create a new todo interactively. ")
     public void newTodo(@Option(names = "--definition", description = "Upto three words describing the todo.", paramLabel = "short description") String definition, 
-    @Option(names = "--details", description = "A longer paragraph describing the todo.", paramLabel = "longer details") String details, 
+            @Option(names = "--details", description = "A longer paragraph describing the todo.", paramLabel = "longer details") String details, 
             @Option(names = "--date", description = "Date to execute the todo. Format dd MMM yyyy e.g 21 Feb 2021.", paramLabel = "date to execute") CharSequence dateToExecute) {
         new CreateTodo().createATodo(definition, details, dateToExecute);
     }
@@ -54,11 +56,28 @@ public class Todo implements Runnable {
     }
     
     public static void main(String[] args) {
-        //for deployment
-        //Integer exitCode = new CommandLine(new Todo()).execute(args);
-        //System.exit(exitCode);
+        //when the code starts, we always look for the storage directory
+        File storageFolder = new File(System.getProperty("user.home") + File.separator + ".todoappdata");
         
-        //for testing
-        new CommandLine(new Todo()).execute("mark-done", "--id", "e7b0c5af");
+        //if it does exist we simply proceed running the user's commands
+        if(storageFolder.exists()) {
+            //for deployment
+            Integer exitCode = new CommandLine(new Todo()).execute(args);
+            System.exit(exitCode);
+
+            //for testing
+            //new CommandLine(new Todo()).execute("view", "--id", "cb325677");
+        
+        //else we create it and fill it with sample data first, then proceed executing user commands
+        } else {
+            new InitSample();
+            System.out.println("Created new folder coz it does not exist.");
+            //for deployment
+            Integer exitCode = new CommandLine(new Todo()).execute(args);
+            System.exit(exitCode);
+
+            //for testing
+            //new CommandLine(new Todo()).execute("");
+        }
     }
 }
