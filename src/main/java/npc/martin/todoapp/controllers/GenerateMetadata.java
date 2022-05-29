@@ -2,6 +2,7 @@ package npc.martin.todoapp.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 /**
@@ -39,7 +40,10 @@ public abstract class GenerateMetadata {
      * <p>This method simply returns the current time when the todo object was created.</p>
      */
     protected LocalTime generateTimeCreated() {
-        return LocalTime.now();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String f = timeFormatter.format(LocalTime.now());
+        CharSequence fsec = f;
+        return LocalTime.parse(fsec);
     }
     
     /**
