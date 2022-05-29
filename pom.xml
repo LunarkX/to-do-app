@@ -6,7 +6,7 @@
 
   <groupId>npc.martin</groupId>
   <artifactId>todoapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-STABLE</version>
 
   <name>todoapp</name>
   <description>A simple todoapp.</description>
@@ -53,6 +53,31 @@
   </dependencies>
 
   <build>
+    <plugins>
+        <!-- Plugin to create the fat jar -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.2.4</version>
+            <executions>
+              <!-- run the shade goal on package phase -->
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>shade</goal>
+                </goals>
+                <configuration>
+                  <transformers>
+                    <!-- add main class to manifest file -->
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                      <mainClass>npc.martin.todoapp.Todo</mainClass>
+                    </transformer>
+                  </transformers>
+                </configuration>
+              </execution>
+            </executions>
+        </plugin>
+    </plugins>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
