@@ -24,7 +24,7 @@ public class GenerateTodoTables extends CreateTodo {
      * <h4>tableGenerator(List<TodoObject> dataSource)</h4>
      * <p>
      * This is the method doing actual generate of tables. It takes a source and uses Freva's 
-     * Ascii table code to build all the tables.
+     * AsciiTable code to build all the tables.
      * </p>
      * @param dataSource 
      */
