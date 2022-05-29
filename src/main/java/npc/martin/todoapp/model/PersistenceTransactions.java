@@ -16,7 +16,9 @@ import java.util.List;
  * @author bikathi_martin
  */
 public class PersistenceTransactions {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
     private final String userHome = System.getProperty("user.home");
     
     public List<TodoObject> temporaryList = new ArrayList<>();
@@ -30,8 +32,6 @@ public class PersistenceTransactions {
         Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
         
         try {
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path.toString()), todoListObject);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -45,8 +45,6 @@ public class PersistenceTransactions {
         Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
         
         try {
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             readObject = objectMapper.readValue(new File(path.toString()), TodoList.class);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -64,8 +62,6 @@ public class PersistenceTransactions {
         Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
         
         try {
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path.toString()), doneList);
         } catch (IOException ex) {
             System.out.println(ex);
@@ -79,8 +75,6 @@ public class PersistenceTransactions {
         Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
         
         try {
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
             temporaryList = Arrays.asList(objectMapper.readValue(new File(path.toString()), TodoObject[].class));
             doneTodosList = new ArrayList<>(temporaryList);
         } catch (IOException ex) {
