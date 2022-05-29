@@ -14,7 +14,7 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 
 @Command(name = "todo", description = "Start the Todo command line utility.", mixinStandardHelpOptions = true, 
-        version = "Todo-1.0-BETA")
+        version = "Todo-1.0-STABLE")
 public class Todo implements Runnable {
     @Spec CommandSpec spec;
     
