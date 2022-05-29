@@ -13,7 +13,7 @@ import java.util.UUID;
  * date of creation and time of creation data.
  * </p>
  */
-abstract class GenerateMetadata {
+public abstract class GenerateMetadata {
     /**
      * 
      * @return String
