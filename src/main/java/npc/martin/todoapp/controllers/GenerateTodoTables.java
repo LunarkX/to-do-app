@@ -91,7 +91,7 @@ public class GenerateTodoTables extends CreateTodo {
         listActions = transactions.readSavedJSON();
         System.out.println("Generating view tables...");
         
-        //we will generate the tabke using the entire list
+        //we will generate the table using the entire list
         this.tableGenerator(listActions.getTodoList());
     }
     
