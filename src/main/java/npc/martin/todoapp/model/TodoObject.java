@@ -21,7 +21,7 @@ public class TodoObject {
         return todoId;
     }
 
-    public void setToDo(String toDo) {
+    public void setTodoID(String toDo) {
         this.todoId = toDo;
     }
 
