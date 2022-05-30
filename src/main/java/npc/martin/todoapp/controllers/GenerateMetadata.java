@@ -41,9 +41,9 @@ public abstract class GenerateMetadata {
      */
     protected LocalTime generateTimeCreated() {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String f = timeFormatter.format(LocalTime.now());
-        CharSequence fsec = f;
-        return LocalTime.parse(fsec);
+        String t = timeFormatter.format(LocalTime.now());
+        CharSequence timeNow = t;
+        return LocalTime.parse(timeNow);
     }
     
     /**
