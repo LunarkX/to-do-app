@@ -50,12 +50,12 @@ public final class InitSample extends GenerateMetadata {
     
     public void saveSampleTodo() {
         //make the storage directory in a hidden folder in /home/user
-        File file = new File(userHome + File.separator + ".todoappdata");
+        File file = new File(userHome + File.separator + ".todoapp");
         file.mkdir();
         
         //get path to the storage 
-        Path pathToNewTodos = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
-        Path pathToSavedTodos = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
+        Path pathToNewTodos = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "new-todos.json");
+        Path pathToSavedTodos = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todos-marked-done.json");
         
         try {
             //first save the sample new todos;

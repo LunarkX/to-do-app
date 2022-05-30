@@ -25,11 +25,11 @@ public class PersistenceTransactions {
     
     public void saveAsJSON(TodoList todoListObject) {
         //make the storage directory in a hidden folder in /home/user
-        File file = new File(userHome + File.separator + ".todoappdata");
+        File file = new File(userHome + File.separator + ".todoapp");
         file.mkdir();
         
         //get path to the storage 
-        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
+        Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "new-todos.json");
         
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path.toString()), todoListObject);
@@ -42,7 +42,7 @@ public class PersistenceTransactions {
         TodoList readObject = null;
         
         //get path to the source file
-        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-saved.json");
+        Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "new-todos.json");
         
         try {
             readObject = objectMapper.readValue(new File(path.toString()), TodoList.class);
@@ -55,11 +55,11 @@ public class PersistenceTransactions {
     
     public void saveMarkedDone(List<TodoObject> doneList) {
         //make the storage directory in a hidden folder in /home/user
-        File file = new File(userHome + File.separator + ".todoappdata");
+        File file = new File(userHome + File.separator + ".todoapp");
         file.mkdir();
         
         //get path to the storage 
-        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
+        Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todos-marked-done.json");
         
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path.toString()), doneList);
@@ -72,7 +72,7 @@ public class PersistenceTransactions {
         List<TodoObject> doneTodosList = null;
         
         //get path to the source file
-        Path path = Paths.get(userHome + File.separator + ".todoappdata" + File.separator + "todo-marked-done.json");
+        Path path = Paths.get(userHome + File.separator + ".todoapp" + File.separator + "todos-marked-done.json");
         
         try {
             temporaryList = Arrays.asList(objectMapper.readValue(new File(path.toString()), TodoObject[].class));
