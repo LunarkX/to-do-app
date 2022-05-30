@@ -33,8 +33,8 @@ public final class InitSample extends GenerateMetadata {
     public void createSampleTodo() {
         //create the sample object
         sampleTodoObject.setTodoID(this.generateUniqueId());
-        sampleTodoObject.setTodoDefinition("This is a sample definition.");
-        sampleTodoObject.setTodoDetails("This is a sample detailed description. It can be a paragraph long.");
+        sampleTodoObject.setTodoDefinition("A sample definition.");
+        sampleTodoObject.setTodoDetails("A sample detailed description. It can be a paragraph long.");
         sampleTodoObject.setDateCreated(LocalDate.parse("01 Jan 1970", DateTimeFormatter.ofPattern("dd MMM yyyy")));
         sampleTodoObject.setTimeCreated(this.generateTimeCreated());
         sampleTodoObject.setDateToExecute(LocalDate.parse("03 Jan 1970", DateTimeFormatter.ofPattern("dd MMM yyyy")));
