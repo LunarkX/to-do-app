@@ -19,35 +19,40 @@ public class Todo implements Runnable {
     @Spec CommandSpec spec;
     
     @Command(name = "new-interactive", description = "Create a new todo interactively.", mixinStandardHelpOptions = true)
-    public void newTodo() {
+    private void newTodo() {
         new CreateTodo().createATodo();
     }
     
     @Command(name = "new", description = "Create a new todo no-interactive.", mixinStandardHelpOptions = true)
-    public void newTodo(@Option(names = "--definition", description = "Upto three words describing the todo.", paramLabel = "short description") String definition, 
+    private void newTodo(@Option(names = "--definition", description = "Upto three words describing the todo.", paramLabel = "short description") String definition, 
             @Option(names = "--details", description = "A longer paragraph describing the todo.", paramLabel = "longer details") String details, 
             @Option(names = "--date", description = "Date to execute the todo. Format dd MMM yyyy e.g 21 Feb 2021.", paramLabel = "date to execute") CharSequence dateToExecute) {
         new CreateTodo().createATodo(definition, details, dateToExecute);
     }
     
     @Command(name = "search", description = "Search for a todo by its id.", mixinStandardHelpOptions = true)
-    void searchTodo(@Option(names = "--id", description = "The id of the todo to search for.", paramLabel = "ID") String id) {
+    private void searchTodo(@Option(names = "--id", description = "The id of the todo to search for.", paramLabel = "ID") String id) {
         new FindAndEditTodo().findSpecTodo(id);
     }
     
     @Command(name = "edit", description = "Edit an existing todo by its id.")
-    void editTodo(@Option(names = "--id", description = "The id of the todo to edit.", paramLabel = "ID") String id) {
+    private void editTodo(@Option(names = "--id", description = "The id of the todo to edit.", paramLabel = "ID") String id) {
         new FindAndEditTodo().editTodo(id);
     }
     
     @Command(name = "view", description = "View details of an existing todo.")
-    void viewTodo(@Option(names = "--id", description = "The id of the todo you want to view.", paramLabel = "ID") String id) {
+    private void viewTodo(@Option(names = "--id", description = "The id of the todo you want to view.", paramLabel = "ID") String id) {
         new GenerateTodoTables().generateWithID(id);
     }
     
     @Command(name = "mark-done", description = "Mark a todo as done.")
-    void markDone(@Option(names = "--id", description = "The id of the todo to mark as done.", paramLabel = "ID") String id) {
+    private void markDone(@Option(names = "--id", description = "The id of the todo to mark as done.", paramLabel = "ID") String id) {
         new MarkAsDone().markTodoDone(id);
+    }
+    
+    @Command(name = "view-all", description = "Generate an overview of all todos(un-done).")
+    private void viewTodo() {
+        new GenerateTodoTables().generateWithoutID();
     }
     
     @Override
@@ -62,11 +67,11 @@ public class Todo implements Runnable {
         //if it does exist we simply proceed running the user's commands
         if(storageFolder.exists()) {
             //for deployment
-            Integer exitCode = new CommandLine(new Todo()).execute(args);
-            System.exit(exitCode);
+            //Integer exitCode = new CommandLine(new Todo()).execute(args);
+            //System.exit(exitCode);
 
             //for testing
-            //new CommandLine(new Todo()).execute("-h");
+            new CommandLine(new Todo()).execute("view-all");
         
         //else we create it and fill it with sample data first, then proceed executing user commands
         } else {
