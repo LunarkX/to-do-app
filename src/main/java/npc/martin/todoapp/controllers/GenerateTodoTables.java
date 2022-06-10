@@ -3,6 +3,7 @@ package npc.martin.todoapp.controllers;
 import com.github.freva.asciitable.AsciiTable;
 import com.github.freva.asciitable.Column;
 import com.github.freva.asciitable.HorizontalAlign;
+import java.util.ArrayList;
 import npc.martin.todoapp.model.TodoObject;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ import npc.martin.todoapp.model.TodoList;
 public class GenerateTodoTables extends CreateTodo {
     protected Character[] borderStyle = AsciiTable.FANCY_ASCII;
     protected List<TodoObject> singleItemList;
+    private List<TodoObject> markedDone = new ArrayList<>();
     
     /**
      * <h4>tableGenerator(List<TodoObject> dataSource)</h4>
@@ -95,12 +97,24 @@ public class GenerateTodoTables extends CreateTodo {
      * by the user but it takes no argument.
      * </p>
      */
-    public void generateWithoutID() {
-        listActions = transactions.readSavedJSON();
-        System.out.println("Generating view tables...");
-        
-        //we will generate the table using the entire list
-        this.tableGenerator(listActions.getTodoList());
+    public void generateWithoutID(String[] targetTables) {
+        for(String tableName: targetTables) {
+            if(tableName.equals("not-done")) {
+                listActions = transactions.readSavedJSON();
+                System.out.println("Generating view tables...");
+
+                //we will generate the table using the entire list
+                this.tableGenerator(listActions.getTodoList());
+            } else if(tableName.equals("done")) {
+                markedDone = transactions.readMarkedDone();
+                System.out.println("Generating view tables...");
+                
+                //we will generate a tabel using the entire list
+                this.tableGenerator(markedDone);
+            } else {
+                System.out.println("Table non-existent, please provide a valid table name. Use 'done' or 'not-done'.");
+            }
+        }
     }
     
     /**
