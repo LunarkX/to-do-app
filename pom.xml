@@ -6,7 +6,7 @@
 
   <groupId>npc.martin</groupId>
   <artifactId>todoapp</artifactId>
-  <version>1.1-STABLE</version>
+  <version>1.2-STABLE</version>
 
   <name>todoapp</name>
   <description>A simple todoapp.</description>
