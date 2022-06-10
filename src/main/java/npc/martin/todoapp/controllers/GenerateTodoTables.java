@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import npc.martin.todoapp.model.TodoObject;
 import java.util.Arrays;
 import java.util.List;
+import npc.martin.todoapp.Todo;
 import npc.martin.todoapp.model.TodoList;
 
 /**
@@ -32,7 +33,8 @@ public class GenerateTodoTables extends CreateTodo {
      * @param dataSource 
      */
     public void tableGenerator(List<TodoObject> dataSource) {
-        System.out.println(AsciiTable.getTable(borderStyle, dataSource, Arrays.asList(
+        if(Todo.full == true) {
+            System.out.println(AsciiTable.getTable(borderStyle, dataSource, Arrays.asList(
             //column 1
             new Column().header("Item ID").headerAlign(HorizontalAlign.LEFT).dataAlign(HorizontalAlign.LEFT)
                     .with(todoItem -> todoItem.getTodoId()),
@@ -61,6 +63,25 @@ public class GenerateTodoTables extends CreateTodo {
             new Column().header("Date Executed").headerAlign(HorizontalAlign.LEFT).dataAlign(HorizontalAlign.LEFT)
                     .with(todoItem -> todoItem.getDateExecuted().toString())
         )));
+        } else if(Todo.full == false) {
+            System.out.println(AsciiTable.getTable(borderStyle, dataSource, Arrays.asList(
+            //column 1
+            new Column().header("Item ID").headerAlign(HorizontalAlign.LEFT).dataAlign(HorizontalAlign.LEFT)
+                    .with(todoItem -> todoItem.getTodoId()),
+                
+            //column 2
+            new Column().header("Simple Definition").headerAlign(HorizontalAlign.LEFT).dataAlign(HorizontalAlign.LEFT)
+                    .with(todoItem -> todoItem.getTodoDefinition()),
+
+            //column 4
+            new Column().header("Date Created").headerAlign(HorizontalAlign.LEFT).dataAlign(HorizontalAlign.LEFT)
+                    .with(todoItem -> todoItem.getDateCreated().toString()),
+
+            //column 6
+            new Column().header("Date to Execute").headerAlign(HorizontalAlign.LEFT).dataAlign(HorizontalAlign.LEFT)
+                    .with(todoItem -> todoItem.getDateToExecute().toString())
+        )));
+        }
     }
     
     /**

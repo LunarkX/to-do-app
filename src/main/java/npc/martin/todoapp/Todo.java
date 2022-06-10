@@ -16,6 +16,9 @@ import picocli.CommandLine.Spec;
 public class Todo implements Runnable {
     @Spec CommandSpec spec;
     
+    @Option(names = "--detailed", description = "Specify that you want a full detailed view table.")
+    public static boolean full;
+    
     @Command(name = "new-interactive", description = "Create a new todo item interactively.", mixinStandardHelpOptions = true)
     protected void newTodo() {
         new CreateTodo().createATodo();
@@ -65,19 +68,19 @@ public class Todo implements Runnable {
         //if it does exist we simply proceed running the user's commands
         if(storageFolder.exists()) {
             //for deployment
-            //System.exit(new CommandLine(new Todo()).execute(args));
+            System.exit(new CommandLine(new Todo()).execute(args));
 
             //for testing
-            new CommandLine(new Todo()).execute("view-all", "not-done");
+            //new CommandLine(new Todo()).execute("view-all", "done");
         
         //else we create it and fill it with sample data first, then proceed executing user commands
         } else {
             new InitSample();
             //for deployment
-            //System.exit(new CommandLine(new Todo()).execute(args));
+            System.exit(new CommandLine(new Todo()).execute(args));
 
             //for testing
-            new CommandLine(new Todo()).execute("-h");
+            //new CommandLine(new Todo()).execute("-h");
         }
     }
 }
